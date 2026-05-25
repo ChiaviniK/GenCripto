@@ -1,0 +1,23 @@
+create database gencripto;
+use gencripto;
+
+-- Criação da tabela de Clientes (Tabela Dimensão)
+CREATE TABLE clientes (
+    id_cliente INT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    data_cadastro DATE NOT NULL
+);
+
+-- Criação da tabela de Transações (Tabela Fato)
+CREATE TABLE transacoes (
+    id_transacao INT PRIMARY KEY,
+    id_cliente INT,
+    codigo_ativo VARCHAR(10) NOT NULL,
+    tipo_transacao VARCHAR(10) NOT NULL, -- COMPRA ou VENDA
+    quantidade DECIMAL(18, 4) NOT NULL,
+    preco_unitario DECIMAL(18, 2) NOT NULL,
+    data_transacao DATE NOT NULL,
+    -- Garantindo o relacionamento relacional (Integridade Referencial)
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente)
+);
